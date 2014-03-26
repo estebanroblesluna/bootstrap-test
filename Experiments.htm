@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Abztractionz</title>
+		<meta name= "viewport" content="width=device-width, initial-scale=1.0">
+		<link href = "css/bootstrap.min.css" rel = "stylesheet">
+		<link href = "css/styles.css" rel = "stylesheet">
+	</head>
+	<body>
+		
+		<div class = "navbar navbar-inverse navbar-static-top">
+			<div class = "container">
+			
+				<a href = "file:///home/mgrasso/Pagina%20HTML/bootstrap-3.1.1-dist/index.htm" class = "navbar-brand">Abztractionz</a>
+				
+				
+			
+				<div class = "collapse navbar-collapse navHeaderCollapse">
+					<ul class = "nav navbar-nav navbar-right">
+						<li><a href = "file:///home/mgrasso/Pagina%20HTML/bootstrap-3.1.1-dist/index.htm">Home</a></li>
+						<li><a href = "file:///home/mgrasso/Pagina%20HTML/bootstrap-3.1.1-dist/Features.htm">Features</a></li>
+						<li class = "active"><a href = "#">Experiments</a></li>
+						<li><a href = "file:///home/mgrasso/Pagina%20HTML/bootstrap-3.1.1-dist/demos.htm">Demos</a></li>
+						<li><a href = "#">Try it!</a></li>
+						<li class = "dropdown">
+							
+							<a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">Contact Us On.. <b class = "caret"></b></a>
+							<ul class = "dropdown-menu">
+								<li><a href = "#">Twitter</a></li>
+								<li><a href = "#">Facebook</a></li>
+								<li><a href = "#">Google+</a></li>
+								<li><a href = "#">Youtube</a></li>
+							</ul>
+							
+						</li>
+					</ul>
+					
+					
+				</div>
+			</div>
+		</div>
+
+		<div class = "container">
+			<h3>Fixing production problems of a WebML application</h3>
+			<br>
+			<ul>
+				<li>
+					<a href="#intro">Introduction</a>
+				</li>
+				<li>
+					<a href="#eva">Evaluation</a>
+				</li>
+				<li>
+					<a href="#expe">Experiment</a>
+				</li>
+				<li>
+					<a href="#downl">Download</a>
+				</li>
+			</ul>
+			<br>
+			
+			<a name="#intro" class="black">
+				<h4>Introduction</h4>
+			</a>
+			<p>To test the features that Abztractions provides, we confront a Web application created with <a href="http://www.webratio.com/" target="blank">WebML</a> with the same application "built" in Abztractionz. The application is simple yet enough to probe the point of why the approach taken by Abztractionz is powerful.</p>
+			<p>The application under study is an E-commerce application that sells products to its customers. Each product can be ranked according to a 1-5 star pattern, though the product rank is weight according to the user’s reputation. The user’s reputation changes not only by its opinions (reviews) but also for the positive and negative feedback (valuation) that those reviews received. We also take into account how old are those positive/negative feedbacks and we give less weight to those which become old. The following figures shows the WebML and Abztractions models for this application.</p>
+			<table class="table table-bordered table-striped">
+				<tbody>
+					<tr>
+						<th class="text-center">
+							<strong>Abztractionz</strong>
+						</th>
+						<th class="text-center">
+							<strong>WebRatio</strong>
+						</th>
+					</tr>	
+					<tr>
+						<td>
+							<img src="http://www.abztractionz.com/img/ecommerce-abztractionz.png">
+						</td>
+						<td>
+							<img src="http://www.abztractionz.com/img/ecommerce-webratio.png">
+						</td>
+					</tr>
+				</tbody>
+
+			</table>
+			<a name="#eva" class="black">
+				<h4>Evaluation</h4>
+			</a>
+			<p>We submitted both applications to a stress scenario that can be easily reproduced multiple times. Using a simple script we have initially filled the database with 100 products, 50 users, 4 reviews per user (on average), and 8 valuations per review (on aver-age). Then, every 5 seconds (approximately) we add extra products, users, reviews and valuations so that the computation of the product rank takes more time. Meanwhile, a performance test created by <a href="https://jmeter.apache.org/" target="blank">JMeter</a> is run. That allows us to simulate traffic and measure the application’s performance. We have used 40 users (threads) to request for random product detail pages.</p>
+			<p>In this test scenario we have evaluated the activities that engineers performed over each application. However, in both cases, the identification of the performance problem comes from users who complain about the product details page load time. The development team starts diagnosing the problem in both applications; in the following table we detail the activities performed for each implementation to identify the root cause of the problem:</p>
+			<table class="table table-bordered table-striped">
+				<tbody>
+					<tr>
+						<th></th>
+						<th class="text-center">
+							<strong>Abztractionz</strong>
+						</th>
+						<th class="text-center">
+							<strong>WebRatio</strong>
+						</th>
+					</tr>
+					<tr>
+						<td>
+							<strong>Logging</strong>
+						</td>
+						<td>
+							The development team adds extra information to be logged and it sees that certain product pages are more accessed than others. Those pages represent popular products.
+						</td>
+						<td>
+							The development team searches in the Web container (Tomcat) logs to find proper information of the problem. As nothing has been found, they add some Log units and redeploy the application in the Production environment. If the logging logic already exists but is disabled, they can tweak the underlying logging framework by accessing generated code, demanding skilled architects for the task.
+						</td>
+					</tr>	
+					<tr>
+						<td>
+							<strong>Profiling</strong>
+						</td>
+						<td>
+							The profiling confirms that the unit that computes the ranking is the one that is taking 90% of the time of each request and that time has increase during the last days.
+						</td>
+						<td>
+							As WebRatio doesn’t provide an out of the box solution thus an OS level technology called <a href="http://www.newrelic.com/" target="blank">JMeter</a> is deployed in production. However, as it can’t find the traces to the models it is hard to identify the model element causing the performance problem. Thus, expressing the solution in term of changes in the models represent a challenge.
+						</td>
+					</tr>	
+				</tbody>
+			</table>
+			<p>In the next figure we show how the response time of the Product details page gets increased with the few insertions we do every 5 seconds for both WebRatio generated applications and Abztractionz interpreted WebML models. The graph shows an initial response time of 200ms and after 10 minutes it raises to 12000ms. Notice that the important piece is to be able to mitigate the performance issue automatically rather than a comparison of the performance of the generated Java code vs Abstractions interpreter. We have marked the point in time where the dynamic transformation “Caching (async lazy compute)” pattern is applied and then response time is improved to optimum levels (less than 200ms) proving the powerful <a href="file:///home/mgrasso/Pagina%20HTML/bootstrap-3.1.1-dist/Features.htm" target="blank">runtime transformations</a>provided by Abztractionz.</p>
+			<p class ="text-center">
+				<img src="http://www.abztractionz.com/img/jmeter-webratio-abztractionz.png">
+			</p>
+			<a name="#expe" class="black">
+				<h4>Experiment video</h4>
+			</a>
+			<br>
+			<div class ="container">
+				<iframe width="800" height="480" src="http://www.youtube.com/embed/J37mwBW86Os?vq=hd720" frameborder="0" allowfullscreen=""></iframe>
+			</div>
+			<br>
+			<br>
+			<a name="#downl" class"black">
+				<h4>Download</h4>
+			</a>
+			<ul>
+				<li>
+					<a href="http://www.abztractionz.com/downloads/webratio.zip">WebRatio proyect</a>
+				</li>
+				<li>Abztractionz model: Available online soon when the platform is open.</li>
+				<li>
+					<a href="http://www.abztractionz.com/downloads/jmeter.zip">JMeter tests</a>
+				</li>
+				<li>
+					<a href="http://www.abztractionz.com/downloads/db.zip">DB script</a>
+				</li>
+			</ul> 
+			<div class ="row">
+				<div class ="col-md-12">
+					
+					<hr>	
+		
+
+					<footer>
+						<p>© Abztractionz 2014</p>
+					</footer>
+				</din>
+			</div>
+		</div>
+
+		<div class = "navbar navbar-default navbar-fixed-bottom">
+			<p class = "navbar-text">Site built it by Mariano Grasso</p>
+			<a href = "http://www.youtube.com/user/abztractiontutorials" class = "navbar-btn btn-danger btn pull-right">Subscribe on Youtube</a>
+		</div>		
+		
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src = "js/bootstrap.js"></script>
+	</body>
+	
+
+</html>
