@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Abstractions</title>
+		<meta name= "viewport" content="width=device-width, initial-scale=1.0">
+		<link href = "css/bootstrap.min.css" rel = "stylesheet">
+		<link href = "css/styles.css" rel = "stylessheet">
+	</head>
+	<body>
+		
+		<div class = "navbar navbar-inverse navbar-static-top">
+			<div class = "container">
+			
+				<a href = "#" class = "navbar-brand">Abstractions</a>
+				
+				
+			
+				<div class = "collapse navbar-collapse navHeaderCollapse">
+					<ul class = "nav navbar-nav navbar-right">
+						<li class = "active"><a href = "#">Features</a></li>
+						<li><a href = "#">Experiments</a></li>
+						<li><a href = "#">Demos</a></li>
+						<li><a href = "#">Try it!</a></li>
+						<li class = "dropdown">
+							
+							<a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">Contact Us On.. <b class = "caret"></b></a>
+							<ul class = "dropdown-menu">
+								<li><a href = "#">Twitter</a></li>
+								<li><a href = "#">Facebook</a></li>
+								<li><a href = "#">Google+</a></li>
+								<li><a href = "#">Youtube</a></li>
+							</ul>
+							
+						</li>
+					</ul>
+					
+					
+				</div>
+			<div>
+		</div>
+		
+		<div class = "container">
+			
+			<div class = "jumbotron" class = "text-center">
+				<h1>Hola, esto es Abztractionz</h1>
+				<a class = "btn btn-default">Try it now!</a>
+				<a class = "btn btn-info">Tweet it :)</a>
+			</div>			
+
+			
+		</div>		
+
+
+		<div class = "navbar navbar-default navbar-fixed-bottom">
+			<p class = "navbar-text">Site built it by Mariano Grasso</p>
+			<a href = "http://www.youtube.com/user/abztractiontutorials" class = "navbar-btn btn-danger btn pull-right">Subscribe on Youtube</a>
+
+		</div>		
+		
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src = "js/bootstrap.js"></script>
+	</body>
+	
+
+</html>
